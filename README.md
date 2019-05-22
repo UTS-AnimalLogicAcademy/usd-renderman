@@ -20,5 +20,8 @@ Our current build requirements are
 
 More work will be done to reduce and simplify build requirments if we have time.
 
+## Contributing
+We are still actively developing this repo as needed. However if there's any external interest in growing support for USD and Renderman, we'd be open accepting pull-requests. We'll add more documentation on how to do that, but for now, feel free to contact us directly or open an issue on GitHub!
+
 ## Acknowledgements
 A lot of the usd - katana specific code is heavily influenced by Luma Picture's work with [usd-arnold](https://github.com/LumaPictures/usd-arnold).
