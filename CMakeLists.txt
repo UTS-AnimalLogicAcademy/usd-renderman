@@ -29,10 +29,11 @@ set(KATANA_HOME "$ENV{KATANA_HOME}" CACHE PATH "Path to Katana")
 find_package(Katana PATHS "${KATANA_HOME}/plugin_apis/cmake" REQUIRED)
 add_compile_options(-Wall)
 
+#add_definitions(-DBOOST_ERROR_CODE_HEADER_ONLY)
+
 # Ensure we don't compile DSOs with undefined symbols.
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined")
 set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-undefined")
-
 
 set(USD_LIBRARY_DIR $ENV{REZ_USD_ROOT}/lib)
 set(USD_INCLUDE_DIR $ENV{REZ_USD_ROOT}/include)

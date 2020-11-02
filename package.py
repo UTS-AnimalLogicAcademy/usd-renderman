@@ -2,23 +2,20 @@
 
 name = 'usd_renderman'
 
-version = '0.0.4'
+version = '0.0.5'
 
-authors = ['ben.skinner']
+authors = ['ben.skinner', 'daniel.flood']
 
 build_requires = [
                   'python',
-                  'boost',
-                  'usd',
-                  'usd_katana',
-                  'tbb',
-                  'rfk',
-                  'renderman'
+                  'cmake-3.2',
+                  'boost-1.55',
+                  'usd_katana'
 ]
 
 variants = [
-    ['platform-linux', 'arch-x86_64', 'katana-3.0.7'],
-    ['platform-linux', 'arch-x86_64', 'katana-3.1.5']
+    ['platform-linux', 'arch-x86_64', 'katana-3.0.7', 'usd-19', 'tbb-4.4', 'rfk-22', 'renderman-22'],
+    ['platform-linux', 'arch-x86_64', 'katana-3.0.7', 'usd-19', 'tbb-4.4', 'rfk-23', 'renderman-23']
 ]
 
 def commands():

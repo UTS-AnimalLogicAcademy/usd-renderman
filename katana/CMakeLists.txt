@@ -14,6 +14,7 @@ find_package(Boost
         filesystem
         serialization
         python
+        system
         REQUIRED
 )
 
@@ -85,7 +86,7 @@ target_link_libraries(${PLUGIN_NAME}
     usdKatana
     ${USD_KATANA_LIBRARY_DIR}
     ${USD_LIBRARY_DIR}
-    $ENV{REZ_RFK_ROOT}/plugins/Resources/PRMan22/Libs
+    $ENV{PRMAN_LIBS}
     ${RENDERMAN_LIBRARY}
 )
 
