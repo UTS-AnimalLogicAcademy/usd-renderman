@@ -1,89 +1,96 @@
-# Simple module to find USD.
+# Copyright 2019 Foundry
+#
+# Licensed under the Apache License, Version 2.0 (the "Apache License")
+# with the following modification; you may not use this file except in
+# compliance with the Apache License and the following modification to it:
+# Section 6. Trademarks. is deleted and replaced with:
+#
+# 6. Trademarks. This License does not grant permission to use the trade
+# names, trademarks, service marks, or product names of the Licensor
+# and its affiliates, except as required to comply with Section 4(c) of
+# the License and to reproduce the content of the NOTICE file.
+#
+# You may obtain a copy of the Apache License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the Apache License with the above modification is
+# distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied. See the Apache License for the specific
+# language governing permissions and limitations under the Apache License.
 
-find_path(USD_INCLUDE_DIR pxr/pxr.h
-          PATHS ${USD_ROOT}/include
-                $ENV{USD_ROOT}/include
-          DOC "USD Include directory")
 
-find_path(USD_LIBRARY_DIR
-          NAMES libusd.so libusd.dylib
-          PATHS ${USD_ROOT}/lib
-                $ENV{USD_ROOT}/lib
-          DOC "USD Libraries directory")
+#The USD libraries required by the Katana USD Plug-ins
+set(USD_LIBRARIES
+    gf
+    hio
+    sdf
+    tf
+    usdGeom
+    usdHydra
+    usdImagingGL
+    usdLux
+    usdRi
+    usdShade
+    usdSkel
+    usdUI
+    usdUtils
+    vt
+)
 
-find_file(USD_GENSCHEMA
-          names usdGenSchema
-          PATHS ${USD_ROOT}/bin
-                $ENV{USD_ROOT}/bin
-          DOC "USD Gen schema application")
-
-# USD Maya components
-
-find_path(USD_MAYA_INCLUDE_DIR usdMaya/api.h
-          PATHS ${USD_ROOT}/third_party/maya/include
-                $ENV{USD_ROOT}/third_party/maya/include
-                ${USD_MAYA_ROOT}/third_party/maya/include
-                $ENV{USD_MAYA_ROOT}/third_party/maya/include
-          DOC "USD Maya Include directory")
-
-find_path(USD_MAYA_LIBRARY_DIR
-          NAMES libusdMaya.so libusdMaya.dylib
-          PATHS ${USD_ROOT}/third_party/maya/lib
-                $ENV{USD_ROOT}/third_party/maya/lib
-                ${USD_MAYA_ROOT}/third_party/maya/lib
-                $ENV{USD_MAYA_ROOT}/third_party/maya/lib
-          DOC "USD Maya Library directory")
-
-# USD Katana components
-
-find_path(USD_KATANA_INCLUDE_DIR usdKatana/api.h
-          PATHS ${USD_ROOT}/third_party/katana/include
-                $ENV{USD_ROOT}/third_party/katana/include
-                ${USD_KATANA_ROOT}/third_party/katana/include
-                $ENV{USD_KATANA_ROOT}/third_party/katana/include
-          DOC "USD Katana Include directory")
-
-find_path(USD_KATANA_LIBRARY_DIR
-          NAMES libusdKatana.so libusdKatana.dylib
-          PATHS ${USD_ROOT}/third_party/katana/lib
-                $ENV{USD_ROOT}/third_party/katana/lib
-                ${USD_KATANA_ROOT}/third_party/katana/lib
-                $ENV{USD_KATANA_ROOT}/third_party/katana/lib
-          DOC "USD Katana Library directory")
-
-# USD Houdini components
-
-find_path(USD_HOUDINI_INCLUDE_DIR gusd/api.h
-          PATHS ${USD_ROOT}/third_party/houdini/include
-                $ENV{USD_ROOT}/third_party/houdini/include
-                ${USD_HOUDINI_ROOT}/third_party/houdini/include
-                $ENV{USD_HOUDINI_ROOT}/third_party/houdini/include
-          DOC "USD Houdini Include directory")
-
-find_path(USD_HOUDINI_LIBRARY_DIR libgusd.so
-          PATHS ${USD_ROOT}/third_party/houdini/lib
-                $ENV{USD_ROOT}/third_party/houdini/lib
-                ${USD_HOUDINI_ROOT}/third_party/houdini/lib
-                $ENV{USD_HOUDINI_ROOT}/third_party/houdini/lib
-          DOC "USD Houdini Library directory")
-
-if(USD_INCLUDE_DIR AND EXISTS "${USD_INCLUDE_DIR}/pxr/pxr.h")
-    foreach(_usd_comp MAJOR MINOR PATCH)
-        file(STRINGS
-            "${USD_INCLUDE_DIR}/pxr/pxr.h"
-            _usd_tmp
-            REGEX "#define PXR_${_usd_comp}_VERSION .*$")
-        string(REGEX MATCHALL "[0-9]+" USD_${_usd_comp}_VERSION ${_usd_tmp})
-    endforeach()
-    set(USD_VERSION ${USD_MAJOR_VERSION}.${USD_MINOR_VERSION}.${USD_PATCH_VERSION})
+if(NOT DEFINED USD_LIBRARY_DIR)
+    if(NOT DEFINED USD_ROOT)
+        message(FATAL_ERROR "Unable to find USD libraries USD_ROOT must be"
+            " specified.")
+    endif()
+    set(USD_LIBRARY_DIR ${USD_ROOT}/lib)
 endif()
 
-include(FindPackageHandleStandardArgs)
+if(NOT DEFINED USD_INCLUDE_DIR)
+    if(NOT DEFINED USD_ROOT)
+        message(FATAL_ERROR "Unable to find USD libraries USD_ROOT must be"
+            " specified.")
+    endif()
+    set(USD_INCLUDE_DIR ${USD_ROOT}/include)
+endif()
 
-find_package_handle_standard_args(
-    USD
-    REQUIRED_VARS
-    USD_INCLUDE_DIR
-    USD_LIBRARY_DIR
-    VERSION_VAR
-    USD_VERSION)
+
+set(LIB_EXTENSION "")
+if(UNIX AND NOT APPLE)
+    set(LIB_EXTENSION .so)
+elseif(WIN32)
+    set(LIB_EXTENSION .lib)
+else()
+    message(FATAL_ERROR "Unable to find Apple USD libraries,
+        not supported")
+endif()
+
+foreach(lib ${USD_LIBRARIES})
+    set(USD_${lib}_PATH
+        ${USD_LIBRARY_DIR}/${PXR_LIB_PREFIX}${lib}${LIB_EXTENSION})
+    if(EXISTS ${USD_${lib}_PATH})
+        add_library(${lib} INTERFACE IMPORTED)
+
+        # Probably adding more dependencies than are required to some
+        # libraries.
+        set(LIBS ${USD_${lib}_PATH}
+            Boost::python
+            Boost::thread
+            Boost::system
+            Boost::regex
+            TBB::tbb
+            Python::Python
+            )
+        set_target_properties(${lib}
+            PROPERTIES
+            INTERFACE_LINK_LIBRARIES "${LIBS}"
+        )
+        set_target_properties(${lib}
+            PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES "${USD_INCLUDE_DIR}"
+        )
+    else()
+        message(FATAL-ERROR "Unable to add library ${lib}, could not be found in location ${USD_${lib}_PATH}")
+    endif()
+endforeach()
