@@ -16,7 +16,7 @@ set(KATANA_RESOURCES "$ENV{KATANA_RESOURCES}")
 find_package(Katana PATHS "${KATANA_HOME}/plugin_apis/cmake" REQUIRED)
 
 # Ensure we don't compile DSOs with undefined symbols.
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined")
-set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-undefined")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined -pthread")
+set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-undefined -pthread")
 
 add_subdirectory(katana)
