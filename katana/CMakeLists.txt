@@ -6,9 +6,9 @@ set(USD_KATANA_INCLUDE_DIR $ENV{REZ_KATANAUSDPLUGINS_ROOT}/include)
 set(RENDERMAN_INCLUDE_DIR $ENV{RMANTREE}/include)
 set(RENDERMAN_LIBRARY $ENV{RMANTREE}/lib)
 
-set(USD_LIBRARY_DIR $ENV{KATANA_API_LOCATION}/bin)
-set(USD_INCLUDE_DIR $ENV{KATANA_API_LOCATION}/external/FnUSD/include)
-set(PXR_LIB_PREFIX libfn)
+set(USD_LIBRARY_DIR /opt/Foundry/Katana3.6v2/bin)
+set(USD_INCLUDE_DIR /opt/Foundry/Katana3.6v2/external/FnUSD/include)
+set(PXR_LIB_PREFIX libFn)
 find_package(USD REQUIRED)
 
 set(GEOLIB_API_SOURCE_DIR ${KATANA_API_SOURCE_DIR})
@@ -73,12 +73,12 @@ target_link_libraries(${PLUGIN_NAME}
     Katana::FnAttribute
     Katana::FnGeolibOpPlugin
     Katana::FnGeolibServices
-    fntf
-    fngf
-    fnsdf
-    fnusd
-    fnusdGeom
-    fnusdVol
+    Fntf
+    Fngf
+    Fnsdf
+    Fnusd
+    FnusdGeom
+    FnusdVol
     usdKatana
 )
 

@@ -4,7 +4,7 @@ set (CMAKE_CXX_STANDARD 14)
 
 project(usd-renderman)
 
-set(KATANA_HOME "$ENV{KATANA_HOME}" CACHE PATH "Path to Katana")
+set(KATANA_HOME "/opt/Foundry/Katana3.6v2" CACHE PATH "Path to Katana")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
                       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules

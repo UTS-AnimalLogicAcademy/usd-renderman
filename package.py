@@ -2,14 +2,14 @@
 
 name = 'usd_renderman'
 
-version = '2.0.2'
+version = '2.0.3'
 
 authors = ['ben.skinner', 'daniel.flood', 'jonah.newton']
 
 build_requires = [
                   'python',
                   'cmake-3.2',
-                  'KatanaUsdPlugins',
+                  'KatanaUsdPlugins-19.11',
                   'boost_katana',
                   'tbb_katana'
 ]
@@ -19,4 +19,7 @@ variants = [
 ]
 
 def commands():
+    #env.KATANA_HOME.set('/opt/Foundry/Katana3.6v2')
+    #env.KATANA_API_LOCATION.set(env.KATANA_HOME)
+    #env.LD_LIBRARY_PATH.append('%s/bin' % env.KATANA_HOME)
     env.KATANA_RESOURCES.append('{root}/Resources')
