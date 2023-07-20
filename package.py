@@ -2,16 +2,16 @@
 
 name = 'usd_renderman'
 
-version = '2.1.0'
+version = '2.1.1'
 
 authors = ['ben.skinner', 'daniel.flood', 'jonah.newton']
 
 build_requires = [
                   'python-2',
                   'cmake-3.2',
-                  'KatanaUsdPlugins-19.11',
                   'boost_katana',
-                  'tbb_katana'
+                  'tbb_katana',
+		  'devtoolset-9'
 ]
 
 variants = [
