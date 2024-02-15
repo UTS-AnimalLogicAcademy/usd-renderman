@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef PXRUSDKATANA_READUSDVOLVOLUME_H
-#define PXRUSDKATANA_READUSDVOLVOLUME_H
+#ifndef USDKATANA_READUSDVOLVOLUME_H
+#define USDKATANA_READUSDVOLVOLUME_H
 
 #include <pxr/pxr.h>
 
@@ -24,7 +24,7 @@ PXR_NAMESPACE_OPEN_SCOPE
 void readUSDVolVolume(
     FnKat::GeolibCookInterface& interface,
     FnKat::GroupAttribute opArgs,
-    const PxrUsdKatanaUsdInPrivateData& privateData
+    const UsdKatanaUsdInPrivateData& privateData
 );
 
 PXR_NAMESPACE_CLOSE_SCOPE

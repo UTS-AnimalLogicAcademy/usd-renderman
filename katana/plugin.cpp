@@ -22,14 +22,14 @@
 PXR_NAMESPACE_USING_DIRECTIVE
 
 // Might need to rename this op if usdKatana grows support for usdVol
-PXRUSDKATANA_USDIN_PLUGIN_DECLARE(USDVolVolumeOp)
+USDKATANA_USDIN_PLUGIN_DECLARE(USDVolVolumeOp)
 DEFINE_GEOLIBOP_PLUGIN(USDVolVolumeOp)
-PXRUSDKATANA_USDIN_PLUGIN_DEFINE(
+USDKATANA_USDIN_PLUGIN_DEFINE(
     USDVolVolumeOp, privateData, opArgs, interface) {
     readUSDVolVolume(interface, opArgs, privateData);
 }
 
 void registerPlugins() {
     USD_OP_REGISTER_PLUGIN(USDVolVolumeOp, "USDVolVolumeOp", 0, 1);
-    PxrUsdKatanaUsdInPluginRegistry::RegisterUsdType<UsdVolVolume>( "USDVolVolumeOp" );
+    UsdKatanaUsdInPluginRegistry::RegisterUsdType<UsdVolVolume>( "USDVolVolumeOp" );
 }

@@ -11,6 +11,18 @@ endif()
 set(RENDERMAN_INCLUDE_DIR $ENV{RMANTREE}/include)
 set(RENDERMAN_LIBRARY $ENV{RMANTREE}/lib)
 
+set(PYTHON_VERSION "$ENV{REZ_PYTHON_MAJOR_VERSION}.$ENV{REZ_PYTHON_MINOR_VERSION}")
+
+if(${PYTHON_VERSION} STREQUAL "3.7")
+set(PYTHON_LIB_NAME "3.7m")
+else()
+set(PYTHON_LIB_NAME "${PYTHON_VERSION}")
+endif()
+
+set(PYTHON_VERSION_NODOT "$ENV{REZ_PYTHON_MAJOR_VERSION}$ENV{REZ_PYTHON_MINOR_VERSION}")
+
+set(Python_DIR "$ENV{REZ_PYTHON_ROOT}/miniconda3")
+
 set(USD_LIBRARY_DIR ${KATANA_HOME}/bin)
 set(USD_INCLUDE_DIR ${KATANA_HOME}/external/FnUSD/include)
 
@@ -36,7 +48,7 @@ find_package(Boost
         COMPONENTS
         filesystem
         serialization
-        python27
+        python${PYTHON_VERSION_NODOT}
         system
         thread
         REQUIRED
@@ -48,7 +60,7 @@ set(TBB_LIBRARY $ENV{TBB_LIBRARIES})
 find_package(TBB REQUIRED COMPONENTS tbb)
 add_definitions(${TBB_DEFINITIONS})
 
-find_package(PythonLibs REQUIRED)
+find_package(Python COMPONENTS Development REQUIRED)
 
 
 link_directories(
@@ -59,14 +71,14 @@ link_directories(
 )
 
 include_directories(
-        SYSTEM ${KATANA_HOME}/bin/python2.7/include/python2.7
+        SYSTEM ${KATANA_HOME}/bin/python${PYTHON_VERSION}/include/python${PYTHON_LIB_NAME}
         SYSTEM ${USD_INCLUDE_DIR}
         SYSTEM ${USD_KATANA_INCLUDE_DIR}
         ${TBB_INCLUDE_DIRS}
         SYSTEM ${KATANA_API_INCLUDE_DIR}
         ${CMAKE_SOURCE_DIR}/katana/
         ${Boost_INCLUDE_DIRS}
-        SYSTEM ${PYTHON_INCLUDE_DIRS}
+        SYSTEM ${Python_INCLUDE_DIRS}
 )
 
 file(GLOB SRC *.cpp)
@@ -78,7 +90,7 @@ if(DEFINED ENV{REZ_KATANAUSDPLUGINS_ROOT})
 if($ENV{REZ_KATANA_MAJOR_VERSION} GREATER 3)
 target_link_libraries(${PLUGIN_NAME}
     CEL
-    ${PYTHON_LIBRARIES}
+    ${Python_LIBRARIES}
     ${Boost_LIBRARIES}
     ${Boost_PYTHON_LIBRARY}
     ${TBB_LIBRARIES}
@@ -96,7 +108,7 @@ target_link_libraries(${PLUGIN_NAME}
 else()
 target_link_libraries(${PLUGIN_NAME}
     CEL
-    ${PYTHON_LIBRARIES}
+    ${Python_LIBRARIES}
     ${Boost_LIBRARIES}
     ${Boost_PYTHON_LIBRARY}
     ${TBB_LIBRARIES}
@@ -116,7 +128,7 @@ else()
 if($ENV{REZ_KATANA_MAJOR_VERSION} GREATER 3)
 target_link_libraries(${PLUGIN_NAME}
     CEL
-    ${PYTHON_LIBRARIES}
+    ${Python_LIBRARIES}
     ${Boost_LIBRARIES}
     ${Boost_PYTHON_LIBRARY}
     ${TBB_LIBRARIES}
@@ -134,7 +146,7 @@ target_link_libraries(${PLUGIN_NAME}
 else()
 target_link_libraries(${PLUGIN_NAME}
     CEL
-    ${PYTHON_LIBRARIES}
+    ${Python_LIBRARIES}
     ${Boost_LIBRARIES}
     ${Boost_PYTHON_LIBRARY}
     ${TBB_LIBRARIES}
