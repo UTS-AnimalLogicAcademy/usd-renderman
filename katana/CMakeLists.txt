@@ -63,7 +63,7 @@ set(TBB_LIBRARY $ENV{TBB_LIBRARIES})
 find_package(TBB REQUIRED COMPONENTS tbb)
 add_definitions(${TBB_DEFINITIONS})
 
-find_package(Python COMPONENTS Interpreter Development REQUIRED)
+find_package(Python $ENV{REZ_PYTHON_MAJOR_VERSION}.$ENV{REZ_PYTHON_MINOR_VERSION} COMPONENTS Interpreter Development REQUIRED)
 
 
 link_directories(
