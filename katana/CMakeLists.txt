@@ -21,7 +21,10 @@ endif()
 
 set(PYTHON_VERSION_NODOT "$ENV{REZ_PYTHON_MAJOR_VERSION}$ENV{REZ_PYTHON_MINOR_VERSION}")
 
-set(Python_DIR "$ENV{REZ_PYTHON_ROOT}/miniconda3")
+set(Python_ROOT_DIR "$ENV{REZ_PYTHON_ROOT}/miniconda3")
+
+#set(Python_INCLUDE_DIR "$ENV{REZ_PYTHON_ROOT}/miniconda3/include")
+#set(Python_LIBRARY "$ENV{REZ_PYTHON_ROOT}/miniconda3/lib")
 
 set(USD_LIBRARY_DIR ${KATANA_HOME}/bin)
 set(USD_INCLUDE_DIR ${KATANA_HOME}/external/FnUSD/include)
@@ -60,7 +63,7 @@ set(TBB_LIBRARY $ENV{TBB_LIBRARIES})
 find_package(TBB REQUIRED COMPONENTS tbb)
 add_definitions(${TBB_DEFINITIONS})
 
-find_package(Python COMPONENTS Development REQUIRED)
+find_package(Python 3.9 COMPONENTS Interpreter Development REQUIRED)
 
 
 link_directories(

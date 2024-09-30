@@ -19,4 +19,6 @@ find_package(Katana PATHS "${KATANA_HOME}/plugin_apis/cmake" REQUIRED)
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined -pthread")
 set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-undefined -pthread")
 
+set(CMAKE_CXX_FLAGS "${_PXR_CXX_FLAGS} -D_GLIBCXX_USE_CXX11_ABI=0 ${CMAKE_CXX_FLAGS}")
+
 add_subdirectory(katana)
