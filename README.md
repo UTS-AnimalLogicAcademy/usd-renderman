@@ -4,19 +4,22 @@ Renderman specific integration for USD DCC Plugins used at the UTS Animal Logic 
 ## Goals
 The primary goal of the repo at this point is to support the rendering of USDVol VDBAssets with Renderman in Katana. It is likely that we will find more purposes for this repo but for now support is limited to our needs in production.
 
+## NOTE
+As of Katana 6.5/7.0, VDB volumes are now available natively in Katana, making this repo obsolete.
+
 ## Building
 We build everything with [rez](https://github.com/nerdvegas/rez).
 
 ### Requirements
 Our current build requirements are
- * CMake-3.6.3
- * Renderman-22.5
- * Katana-3.1.1
- * RendermanForKatana-22.3
- * USD-19.01
- * boost-1.55
- * tbb-4.4.6
- * python-2.7.15
+ * CMake-3.16+
+ * Renderman-26.0
+ * Katana-6.0.4
+ * RendermanForKatana-26.0
+ * USD-22.05 (included internally with Katana 6.0)
+ * boost-1.76 (included internally with Katana 6.0)
+ * tbb-2020.3 (included internally with Katana 6.0)
+ * python-3.9
 
 More work will be done to reduce and simplify build requirments if we have time.
 
