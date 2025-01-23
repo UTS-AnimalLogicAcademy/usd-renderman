@@ -2,7 +2,7 @@
 
 name = 'usd_renderman'
 
-version = '3.1.1'
+version = '3.1.2'
 
 authors = ['ben.skinner', 'daniel.flood', 'jonah.newton']
 
@@ -14,7 +14,8 @@ build_requires = [
 ]
 
 variants = [
-    ['platform-linux', 'arch-x86_64', 'katana-6.5', 'rfk-26.2', 'renderman-26.2', 'python-3.9', '!mari']
+    ['platform-linux', 'arch-x86_64', 'katana-6.5', 'rfk-26.3', 'renderman-26.3', 'python-3.9', '!mari'],
+    #['platform-linux', 'arch-x86_64', 'katana-8', 'rfk-26.3', 'renderman-26.3', 'python-3.11', '!mari']
     
 ]
 
