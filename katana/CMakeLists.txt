@@ -23,6 +23,8 @@ set(PYTHON_VERSION_NODOT "$ENV{REZ_PYTHON_MAJOR_VERSION}$ENV{REZ_PYTHON_MINOR_VE
 
 set(Python_ROOT_DIR "$ENV{REZ_PYTHON_ROOT}/miniconda3")
 
+set(Python_EXECUTABLE "$ENV{REZ_PYTHON_ROOT}/miniconda3/bin/python3")
+
 #set(Python_INCLUDE_DIR "$ENV{REZ_PYTHON_ROOT}/miniconda3/include")
 #set(Python_LIBRARY "$ENV{REZ_PYTHON_ROOT}/miniconda3/lib")
 
